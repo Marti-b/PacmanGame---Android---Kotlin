@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PacmanKotlin</string>
+    <string name="points">Points:</string>
+    <string name="move_right">Move Rigth</string>
+    <string name="action_settings">Settings</string>
+    <string name="newgame">New Game</string>
+</resources>
