@@ -35,9 +35,18 @@ class MainActivity : AppCompatActivity() {
         binding.gameView.setGame(game)
         game.newGame()
 
-        binding.moveRight.setOnClickListener {
-            game.movePacmanRight(10)
 
+        binding.moveRight.setOnClickListener {
+            game.movePacmanRight(20)
+        }
+        binding.moveLeft.setOnClickListener{
+            game.movePacmanLeft(20)
+        }
+        binding.moveUp.setOnClickListener{
+            game.movePacmanUp(20)
+        }
+        binding.moveDown.setOnClickListener {
+            game.movePacmanDown(20)
         }
     }
 
