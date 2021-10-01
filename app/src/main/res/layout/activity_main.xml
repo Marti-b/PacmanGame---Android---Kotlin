@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
@@ -35,6 +36,7 @@
 
     <!-- Notice how the custom view is referenced here with
     a full package path-->
+
     <org.pondar.pacmankotlin.GameView
         android:id="@+id/gameView"
         android:layout_width="match_parent"

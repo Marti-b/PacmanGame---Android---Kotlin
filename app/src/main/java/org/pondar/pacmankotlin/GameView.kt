@@ -16,6 +16,7 @@ class GameView : View {
     private var h: Int = 0
     private var w: Int = 0 //used for storing our height and width of the view
 
+
     fun setGame(game: Game) {
         this.game = game
     }
@@ -30,6 +31,7 @@ class GameView : View {
 
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
 
     //In the onDraw we put all our code that should be
     //drawn whenever we update the screen.
@@ -57,7 +59,14 @@ class GameView : View {
 
         //TODO loop through the list of goldcoins and draw them here
 
+        //val coin = GoldCoin();
+        for (i in game.coins){
+            if(!i.taken){
+                canvas.drawBitmap(game.coinBitmap, i.coinx.toFloat(),
+                        i.coiny.toFloat(), paint)
+            }
 
+        }
         game.doCollisionCheck()
         super.onDraw(canvas)
     }
