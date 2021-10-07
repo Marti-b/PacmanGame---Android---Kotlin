@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import java.lang.Math.pow
 import java.util.*
 import kotlin.math.hypot
@@ -67,8 +68,6 @@ class Game(private var context: Context,view: TextView) {
     fun initializeGoldcoins()
     {
 
-        // var coinx: Int = kotlin.random.Random.nextInt(0, 255)
-        // var coiny: Int = kotlin.random.Random.nextInt(0, 255)
         val coin1 = GoldCoin(kotlin.random.Random.nextInt(1000),kotlin.random.Random.nextInt(1000),false)
         val coin2 = GoldCoin(kotlin.random.Random.nextInt(1000),kotlin.random.Random.nextInt(1000), false)
         val coin3 = GoldCoin(kotlin.random.Random.nextInt(1000),kotlin.random.Random.nextInt(1000), false)
@@ -96,10 +95,8 @@ class Game(private var context: Context,view: TextView) {
 
         coinx = kotlin.random.Random.nextInt(1000)
         coiny = kotlin.random.Random.nextInt(1000)
-//        coinx2 = kotlin.random.Random.nextInt(1000)
-//        coiny2 = kotlin.random.Random.nextInt(1000)
-//        coinx3 = kotlin.random.Random.nextInt(1000)
-//        coiny3 = kotlin.random.Random.nextInt(1000)
+
+        initializeGoldcoins()
 
         gameView.invalidate() //redraw screen
     }
@@ -153,14 +150,21 @@ class Game(private var context: Context,view: TextView) {
     //so you need to go through the arraylist of goldcoins and
     //check each of them for a collision with the pacman
     fun doCollisionCheck() {
-        for (i in coins){
 
-            if (distance(pacx,pacy,i.coinx,i.coiny)< 150) {
-                Log.d("Mission complished", "Mission complished")
-                i.taken = true
-                points++
-                Log.d("Points: ",points.toString())
+        for (coin in coins){
+
+            if(!coin.taken){
+                if (distance(pacx,pacy,coin.coinx,coin.coiny)< 150) {
+                    Log.d("Mission complished", "Mission complished")
+                    coin.taken = true
+                    points++
+                    Log.d("Points: ",points.toString())
+                    pointsView.text = "${context.resources.getString(R.string.points)} $points"
+                }
             }
+        }
+        if (coins.size == points){
+            Toast.makeText(context, "You won", Toast.LENGTH_LONG).show()
         }
 
     }
