@@ -5,17 +5,22 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context="org.pondar.pacmankotlin.MainActivity" >
-
-    <Button
-        android:id="@+id/moveDown"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/move_down" />
+        android:orientation="horizontal"
+        >
     <Button
         android:id="@+id/moveUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/move_up" />
+    <Button
+        android:id="@+id/moveDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/move_down" />
+
     <Button
         android:id="@+id/moveLeft"
         android:layout_width="wrap_content"
@@ -26,6 +31,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/move_right" />
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reset" />
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/continueLabel" />
+
+        <Button
+            android:id="@+id/stopButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pause" />
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/pointsView"
@@ -34,9 +67,15 @@
         android:layout_height="wrap_content"
         android:text="@string/points" />
 
-    <!-- Notice how the custom view is referenced here with
-    a full package path-->
+    <TextView
+        android:id="@+id/timerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:text="@string/timerValue" />
 
+    ű  <!-- Notice how the custom view is referenced here with
+    a full package path-->
     <org.pondar.pacmankotlin.GameView
         android:id="@+id/gameView"
         android:layout_width="match_parent"

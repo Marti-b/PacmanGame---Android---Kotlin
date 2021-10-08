@@ -34,13 +34,23 @@ class Game(private var context: Context,view: TextView) {
         var coinx = 0
         var coiny = 0
 
+        /*val UP: Int = 1;
+        val DOWN: Int = -1;
+        val LEFT: Int = 1;
+        val RIGHT: Int = 1;*/
 
+        var running = false
+        var direction = 4
+        val UP: Int = 1
+        val DOWN: Int = 2
+        val LEFT: Int = 3
+        val RIGHT: Int = 4
 
         //did we initialize the coins?
         var coinsInitialized = false
 
         //the list of goldcoins - initially empty
-        var coins = ArrayList<GoldCoin>()
+        var coins = ArrayList<GoldCoin>(5)
 
 
 
@@ -56,8 +66,7 @@ class Game(private var context: Context,view: TextView) {
     init {
         pacBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.pacman)
         coinBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.coin)
-//        coinBitmap2 = BitmapFactory.decodeResource(context.resources, R.drawable.coin)
-//        coinBitmap3 = BitmapFactory.decodeResource(context.resources, R.drawable.coin)
+
     }
 
     fun setGameView(view: GameView) {
@@ -89,6 +98,7 @@ class Game(private var context: Context,view: TextView) {
         pacx = 50
         pacy = 400 //just some starting coordinates - you can change this.
         //reset the points
+
         coinsInitialized = false
         points = 0
         pointsView.text = "${context.resources.getString(R.string.points)} $points"
@@ -96,7 +106,10 @@ class Game(private var context: Context,view: TextView) {
         coinx = kotlin.random.Random.nextInt(1000)
         coiny = kotlin.random.Random.nextInt(1000)
 
-        initializeGoldcoins()
+        if (coins.size <= 5){
+            initializeGoldcoins()
+        }
+
 
         gameView.invalidate() //redraw screen
     }
@@ -166,7 +179,6 @@ class Game(private var context: Context,view: TextView) {
         if (coins.size == points){
             Toast.makeText(context, "You won", Toast.LENGTH_LONG).show()
         }
-
     }
 
 
