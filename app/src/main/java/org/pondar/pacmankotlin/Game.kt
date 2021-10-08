@@ -46,6 +46,8 @@ class Game(private var context: Context,view: TextView) {
         val LEFT: Int = 3
         val RIGHT: Int = 4
 
+        var level = 1;
+
         //did we initialize the coins?
         var coinsInitialized = false
 
@@ -76,7 +78,7 @@ class Game(private var context: Context,view: TextView) {
     //TODO initialize goldcoins also here
     fun initializeGoldcoins()
     {
-        //Emptying the array by overwriting with a new array
+        //Emptying the array by overwriting with a new empty array
         var coinsNew = ArrayList<GoldCoin>()
         coins = coinsNew
 
@@ -129,14 +131,14 @@ class Game(private var context: Context,view: TextView) {
         }
     }
     fun movePacmanLeft(pixels: Int){
-        if(pacx + pixels + pacBitmap.width > 0){
+        if(pacx - pixels > 0){
             pacx = pacx - pixels
             doCollisionCheck()
             gameView.invalidate()
         }
     }
     fun movePacmanUp(pixels: Int){
-        if (pacy + pixels + pacBitmap.height > 0){
+        if (pacy - pixels > 0){
             pacy = pacy - pixels
             doCollisionCheck()
             gameView.invalidate()
@@ -179,9 +181,17 @@ class Game(private var context: Context,view: TextView) {
             }
         }
         if (coins.size == points){
-            Toast.makeText(context, "You won", Toast.LENGTH_LONG).show()
             running = false
-            
+            Toast.makeText(context, "You won", Toast.LENGTH_LONG).show()
+        }
+    }
+    fun timerCheck(counter : Int){
+        if (counter == 60 && coins.size != points){
+            running = false
+            Toast.makeText(context, "Time is up. You lost. Start a new game", Toast.LENGTH_LONG).show()
+        } else if(counter <= 60 && coins.size == points){
+            running = false
+            Toast.makeText(context, "You won", Toast.LENGTH_LONG).show()
         }
     }
 

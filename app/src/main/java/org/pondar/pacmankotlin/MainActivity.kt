@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     //Timer
     private var myTimer: Timer = Timer()
     var counter: Int = 0
+    var timeCounter: Int = 0
 
 
 
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             }
         }, 0, 200) //0 indicates we start now, 200
         //is the number of miliseconds between each call
-
+        
         //Functional buttons
         binding.startButton.setOnClickListener{
             game.running = true
@@ -106,16 +107,16 @@ class MainActivity : AppCompatActivity() {
             binding.timerView.text = getString(R.string.timerValue, counter)
 
             if (game.direction == game.RIGHT) {
-                game.movePacmanRight(20)
+                game.movePacmanRight(40)
             }
             if (game.direction == game.LEFT) {
-                game.movePacmanLeft(20)
+                game.movePacmanLeft(40)
             }
             if (game.direction == game.UP) {
-                game.movePacmanUp(20)
+                game.movePacmanUp(40)
             }
             if (game.direction == game.DOWN) {
-                game.movePacmanDown(20)
+                game.movePacmanDown(40)
             }
         }
     }
