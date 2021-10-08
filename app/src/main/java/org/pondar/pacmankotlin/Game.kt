@@ -76,6 +76,9 @@ class Game(private var context: Context,view: TextView) {
     //TODO initialize goldcoins also here
     fun initializeGoldcoins()
     {
+        //Emptying the array by overwriting with a new array
+        var coinsNew = ArrayList<GoldCoin>()
+        coins = coinsNew
 
         val coin1 = GoldCoin(kotlin.random.Random.nextInt(1000),kotlin.random.Random.nextInt(1000),false)
         val coin2 = GoldCoin(kotlin.random.Random.nextInt(1000),kotlin.random.Random.nextInt(1000), false)
@@ -106,9 +109,8 @@ class Game(private var context: Context,view: TextView) {
         coinx = kotlin.random.Random.nextInt(1000)
         coiny = kotlin.random.Random.nextInt(1000)
 
-        if (coins.size <= 5){
-            initializeGoldcoins()
-        }
+        initializeGoldcoins()
+
 
 
         gameView.invalidate() //redraw screen
@@ -178,6 +180,8 @@ class Game(private var context: Context,view: TextView) {
         }
         if (coins.size == points){
             Toast.makeText(context, "You won", Toast.LENGTH_LONG).show()
+            running = false
+            
         }
     }
 
