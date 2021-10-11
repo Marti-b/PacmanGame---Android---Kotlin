@@ -60,8 +60,11 @@ class MainActivity : AppCompatActivity() {
         clockTimer.schedule(object : TimerTask(){
             override fun run() {
                 clockTimerMethod()
-                timeCounter--
-                game.timerCheck(timeCounter)
+                if(game.running){
+                    timeCounter--
+                    game.timerCheck(timeCounter)
+                }
+
             }
         }, 0, 1000)
 
@@ -71,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.stopButton.setOnClickListener{
             game.running = false
+
         }
         binding.resetButton.setOnClickListener{
             timeCounter = 60
