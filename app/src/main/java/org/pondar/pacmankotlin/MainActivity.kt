@@ -20,7 +20,9 @@ class MainActivity : AppCompatActivity() {
     //Timer
     private var myTimer: Timer = Timer()
     var counter: Int = 0
-    var timeCounter: Int = 0
+
+    private var clockTimer = Timer()
+    var timeCounter: Int = 60
 
 
 
@@ -54,7 +56,15 @@ class MainActivity : AppCompatActivity() {
             }
         }, 0, 200) //0 indicates we start now, 200
         //is the number of miliseconds between each call
-        
+
+        clockTimer.schedule(object : TimerTask(){
+            override fun run() {
+                clockTimerMethod()
+                timeCounter--
+                game.timerCheck(timeCounter)
+            }
+        }, 0, 1000)
+
         //Functional buttons
         binding.startButton.setOnClickListener{
             game.running = true
@@ -63,10 +73,10 @@ class MainActivity : AppCompatActivity() {
             game.running = false
         }
         binding.resetButton.setOnClickListener{
-            counter = 0
+            timeCounter = 60
             game.newGame()
             game.running = false
-            binding.timerView.text = getString(R.string.timerValue,counter)
+            binding.timerView.text = getString(R.string.timerValue,timeCounter)
         }
 
         // Changing the direction going via buttons
@@ -88,6 +98,7 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
         //just to make sure if the app is killed, that we stop the timer.
         myTimer.cancel()
+        clockTimer.cancel()
     }
 
     private fun timerMethod() {
@@ -99,24 +110,27 @@ class MainActivity : AppCompatActivity() {
 
         this.runOnUiThread(timerTick)
     }
+    private fun clockTimerMethod() {
+        this.runOnUiThread(timerTick)
+    }
 
     private val timerTick = Runnable {
         if (game.running) {
             counter++
 
-            binding.timerView.text = getString(R.string.timerValue, counter)
+            binding.timerView.text = getString(R.string.timerValue, timeCounter)
 
             if (game.direction == game.RIGHT) {
-                game.movePacmanRight(40)
+                game.movePacmanRight(60)
             }
             if (game.direction == game.LEFT) {
-                game.movePacmanLeft(40)
+                game.movePacmanLeft(60)
             }
             if (game.direction == game.UP) {
-                game.movePacmanUp(40)
+                game.movePacmanUp(60)
             }
             if (game.direction == game.DOWN) {
-                game.movePacmanDown(40)
+                game.movePacmanDown(60)
             }
         }
     }

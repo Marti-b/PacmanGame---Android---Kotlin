@@ -186,10 +186,10 @@ class Game(private var context: Context,view: TextView) {
         }
     }
     fun timerCheck(counter : Int){
-        if (counter == 60 && coins.size != points){
+        if (counter == 0 && coins.size != points){
             running = false
             Toast.makeText(context, "Time is up. You lost. Start a new game", Toast.LENGTH_LONG).show()
-        } else if(counter <= 60 && coins.size == points){
+        } else if(counter >= 0 && coins.size == points){
             running = false
             Toast.makeText(context, "You won", Toast.LENGTH_LONG).show()
         }
