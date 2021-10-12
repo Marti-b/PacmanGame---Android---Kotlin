@@ -73,7 +73,6 @@ class MainActivity : AppCompatActivity() {
         }
         binding.stopButton.setOnClickListener{
             game.running = false
-
         }
         binding.resetButton.setOnClickListener{
             game.timeLeft = 60
@@ -128,6 +127,7 @@ class MainActivity : AppCompatActivity() {
 
             binding.timerView.text = getString(R.string.timerValue, game.timeLeft)
 
+            game.moveEnemyUpAndDown(20)
             if (game.direction == game.RIGHT) {
                 game.movePacmanRight(60)
             }

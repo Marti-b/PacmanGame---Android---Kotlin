@@ -37,14 +37,14 @@ class Game(private var context: Context,view: TextView) {
         // Creating enemy
         var enemyBitmap: Bitmap
         var enemy1 : Enemy = Enemy(500, 800)
+        var enemyDirection : Int = 2
 
         var running = false
-        var direction = 4
+        var direction = 2
         val UP: Int = 1
         val DOWN: Int = 2
         val LEFT: Int = 3
         val RIGHT: Int = 4
-
 
         var timeLeft: Int = 60
         var level = 0;
@@ -157,6 +157,31 @@ class Game(private var context: Context,view: TextView) {
             pacy = pacy + pixels
             doCollisionCheck()
             gameView.invalidate()
+        }
+    }
+    fun moveEnemyUpAndDown(pixels: Int){
+        // moves up
+        if( enemy1.enemyY - pixels > 45 && enemyDirection == UP){
+            enemy1.enemyY -= pixels
+            gameView.invalidate()
+            //when it reach almost the edge it changes direction
+            //if we set to 0 it might never reach the top edge
+            if (enemy1.enemyY - pixels <= 50){
+                enemyDirection = DOWN
+               // enemy1.enemyY += pixels
+                //gameView.invalidate()
+            }
+        }
+        //moves down
+        else if(pacy + pixels + pacBitmap.height <h -20 && enemyDirection == DOWN){
+            enemy1.enemyY += pixels
+            gameView.invalidate()
+            //when it reach almost the edge it changes direction
+            if (enemy1.enemyY + pixels >= h -30){
+                enemyDirection = UP
+               //enemy1.enemyY -= pixels
+                //gameView.invalidate()
+            }
         }
     }
     fun distance(x1:Int,y1:Int,x2:Int,y2:Int) : Float {
