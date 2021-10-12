@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     var counter: Int = 0
 
     private var clockTimer = Timer()
-    var timeCounter: Int = 60
+    //var timeCounter: Int = 60
 
 
 
@@ -61,8 +61,8 @@ class MainActivity : AppCompatActivity() {
             override fun run() {
                 clockTimerMethod()
                 if(game.running){
-                    timeCounter--
-                    game.timerCheck(timeCounter)
+                    game.timeLeft--
+                    game.timerCheck(game.timeLeft)
                 }
 
             }
@@ -77,23 +77,28 @@ class MainActivity : AppCompatActivity() {
 
         }
         binding.resetButton.setOnClickListener{
-            timeCounter = 60
+            game.timeLeft = 60
             game.newGame()
             game.running = false
-            binding.timerView.text = getString(R.string.timerValue,timeCounter)
+            binding.timerView.text = getString(R.string.timerValue,game.timeLeft)
         }
 
         // Changing the direction going via buttons
+        // By clicking the direction buttons the game continues
         binding.moveRight.setOnClickListener {
+            game.running = true
             game.direction= game.RIGHT
         }
         binding.moveLeft.setOnClickListener {
+            game.running = true
             game.direction = game.LEFT
         }
         binding.moveUp.setOnClickListener {
+            game.running = true
             game.direction = game.UP
         }
         binding.moveDown.setOnClickListener {
+            game.running = true
             game.direction = game.DOWN
         }
     }
@@ -102,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
         //just to make sure if the app is killed, that we stop the timer.
         myTimer.cancel()
-        clockTimer.cancel()
+        //clockTimer.cancel()
     }
 
     private fun timerMethod() {
@@ -122,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         if (game.running) {
             counter++
 
-            binding.timerView.text = getString(R.string.timerValue, timeCounter)
+            binding.timerView.text = getString(R.string.timerValue, game.timeLeft)
 
             if (game.direction == game.RIGHT) {
                 game.movePacmanRight(60)
@@ -169,6 +174,7 @@ class MainActivity : AppCompatActivity() {
         } else if (id == R.id.action_newGame) {
             Toast.makeText(this, "New Game clicked", Toast.LENGTH_LONG).show()
             counter = 0
+            game.timeLeft = 60
             game.newGame()
 
             return true

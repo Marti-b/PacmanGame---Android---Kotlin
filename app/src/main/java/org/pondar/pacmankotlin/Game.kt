@@ -34,11 +34,6 @@ class Game(private var context: Context,view: TextView) {
         var coinx = 0
         var coiny = 0
 
-        /*val UP: Int = 1;
-        val DOWN: Int = -1;
-        val LEFT: Int = 1;
-        val RIGHT: Int = 1;*/
-
         var running = false
         var direction = 4
         val UP: Int = 1
@@ -46,16 +41,16 @@ class Game(private var context: Context,view: TextView) {
         val LEFT: Int = 3
         val RIGHT: Int = 4
 
-        var level = 1;
+
+        var timeLeft: Int = 60
+        var level = 0;
+        var lost : Boolean = false
 
         //did we initialize the coins?
         var coinsInitialized = false
 
         //the list of goldcoins - initially empty
         var coins = ArrayList<GoldCoin>(5)
-
-
-
 
         //a reference to the gameview
         private lateinit var gameView: GameView
@@ -105,7 +100,12 @@ class Game(private var context: Context,view: TextView) {
         //reset the points
 
         coinsInitialized = false
+
         points = 0
+        lost = false
+        timeLeft = 60 - (10*level)
+
+
         pointsView.text = "${context.resources.getString(R.string.points)} $points"
 
         coinx = kotlin.random.Random.nextInt(1000)
@@ -114,8 +114,11 @@ class Game(private var context: Context,view: TextView) {
         initializeGoldcoins()
 
 
-
         gameView.invalidate() //redraw screen
+        running = true;
+    }
+    fun nextGame(){
+
     }
     fun setSize(h: Int, w: Int) {
         this.h = h
@@ -180,19 +183,36 @@ class Game(private var context: Context,view: TextView) {
                 }
             }
         }
-        if (coins.size == points){
+            timerCheck(timeLeft)
+    }
+    fun timerCheck(timeLeft : Int){
+        //if time is up and not won
+        if (timeLeft == 0 && coins.size != points){
             running = false
-            Toast.makeText(context, "You won", Toast.LENGTH_LONG).show()
+            lost = true
+            Toast.makeText(context, "Time is up. You lost. Start a new game", Toast.LENGTH_LONG).show()
+        } else if(timeLeft >= 0 && coins.size == points){
+            running = false
+            doLevelUp()
         }
     }
-    fun timerCheck(counter : Int){
-        if (counter == 0 && coins.size != points){
+    //takes an int parameter to calculate less time for next level
+    fun doLevelUp(){
+
+        level++
+        //sets time less for each level and calls for new game
+        if (level <= 5){
+            Toast.makeText(context, "This is level ${level}", Toast.LENGTH_SHORT).show()
+            newGame()
+
+        // the game is won & stopped; and resets level and time
+        } else {
+            Toast.makeText(context, "You won the whole game", Toast.LENGTH_LONG).show()
             running = false
-            Toast.makeText(context, "Time is up. You lost. Start a new game", Toast.LENGTH_LONG).show()
-        } else if(counter >= 0 && coins.size == points){
-            running = false
-            Toast.makeText(context, "You won", Toast.LENGTH_LONG).show()
+            level = 0
+            timeLeft = 60
         }
+
     }
 
 
