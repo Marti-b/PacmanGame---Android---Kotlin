@@ -31,8 +31,12 @@ class Game(private var context: Context,view: TextView) {
         //Creating the coins
         val random = Random()
         var coinBitmap : Bitmap
-        var coinx = 0
-        var coiny = 0
+        //var coinx = 0
+        //var coiny = 0
+
+        // Creating enemy
+        var enemyBitmap: Bitmap
+        var enemy1 : Enemy = Enemy(500, 800)
 
         var running = false
         var direction = 4
@@ -63,6 +67,7 @@ class Game(private var context: Context,view: TextView) {
     init {
         pacBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.pacman)
         coinBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.coin)
+        enemyBitmap= BitmapFactory.decodeResource(context.resources, R.drawable.enemy)
 
     }
 
@@ -103,13 +108,13 @@ class Game(private var context: Context,view: TextView) {
 
         points = 0
         lost = false
-        timeLeft = 60 - (10*level)
+        timeLeft = 60 - (10 * level)
 
 
         pointsView.text = "${context.resources.getString(R.string.points)} $points"
 
-        coinx = kotlin.random.Random.nextInt(1000)
-        coiny = kotlin.random.Random.nextInt(1000)
+        //coinx = kotlin.random.Random.nextInt(1000)
+        //coiny = kotlin.random.Random.nextInt(1000)
 
         initializeGoldcoins()
 
@@ -175,10 +180,8 @@ class Game(private var context: Context,view: TextView) {
 
             if(!coin.taken){
                 if (distance(pacx,pacy,coin.coinx,coin.coiny)< 150) {
-                    Log.d("Mission complished", "Mission complished")
                     coin.taken = true
                     points++
-                    Log.d("Points: ",points.toString())
                     pointsView.text = "${context.resources.getString(R.string.points)} $points"
                 }
             }
@@ -201,6 +204,7 @@ class Game(private var context: Context,view: TextView) {
 
         level++
         //sets time less for each level and calls for new game
+        // this is where we set how many levels we want
         if (level <= 5){
             Toast.makeText(context, "This is level ${level}", Toast.LENGTH_SHORT).show()
             newGame()

@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity() {
                     game.timeLeft--
                     game.timerCheck(game.timeLeft)
                 }
-
             }
         }, 0, 1000)
 
