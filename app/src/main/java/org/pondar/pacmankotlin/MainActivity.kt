@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         //just to make sure if the app is killed, that we stop the timer.
-        myTimer.cancel()
+        //myTimer.cancel()
         //clockTimer.cancel()
     }
 
@@ -127,7 +127,8 @@ class MainActivity : AppCompatActivity() {
 
             binding.timerView.text = getString(R.string.timerValue, game.timeLeft)
 
-            game.moveEnemyUpAndDown(20)
+            game.moveEnemyUpAndDown(game.enemySpeeed)
+
             if (game.direction == game.RIGHT) {
                 game.movePacmanRight(60)
             }

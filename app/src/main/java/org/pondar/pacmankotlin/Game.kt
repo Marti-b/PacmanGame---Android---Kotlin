@@ -38,6 +38,7 @@ class Game(private var context: Context,view: TextView) {
         var enemyBitmap: Bitmap
         var enemy1 : Enemy = Enemy(500, 800)
         var enemyDirection : Int = 2
+        var enemySpeeed : Int = 20
 
         var running = false
         var direction = 2
@@ -105,7 +106,7 @@ class Game(private var context: Context,view: TextView) {
         //reset the points
 
         coinsInitialized = false
-
+        enemySpeeed = 20 + (10 * level)
         points = 0
         lost = false
         timeLeft = 60 - (10 * level)
@@ -200,7 +201,6 @@ class Game(private var context: Context,view: TextView) {
     //so you need to go through the arraylist of goldcoins and
     //check each of them for a collision with the pacman
     fun doCollisionCheck() {
-
         for (coin in coins){
 
             if(!coin.taken){
@@ -212,21 +212,33 @@ class Game(private var context: Context,view: TextView) {
             }
         }
             timerCheck(timeLeft)
+            doEnemyCollisionCheck()
+    }
+    fun doEnemyCollisionCheck(){
+        if (distance(pacx,pacy,enemy1.enemyX,enemy1.enemyY)< 150) {
+            gameOver()
+        }
     }
     fun timerCheck(timeLeft : Int){
         //if time is up and not won
         if (timeLeft == 0 && coins.size != points){
-            running = false
-            lost = true
-            Toast.makeText(context, "Time is up. You lost. Start a new game", Toast.LENGTH_LONG).show()
+            gameOver()
+
         } else if(timeLeft >= 0 && coins.size == points){
             running = false
             doLevelUp()
         }
     }
+    fun gameOver(){
+        running = false
+        lost = true
+        level = 0
+        enemySpeeed = 20
+        Toast.makeText(context, " You lost. Start a new game", Toast.LENGTH_LONG).show()
+    }
     //takes an int parameter to calculate less time for next level
     fun doLevelUp(){
-
+        enemySpeeed +=10
         level++
         //sets time less for each level and calls for new game
         // this is where we set how many levels we want
